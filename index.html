@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAROCEGO — Plataforma de moda sostenible y identitaria</title>
+    <!-- Carga de Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Carga de fuentes: Montserrat (cuerpo) y Playfair Display (títulos) -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        /* Definición de la paleta de colores y fuentes en la configuración de Tailwind */
+        :root {
+            --color-pastel-pink: #F0E0E6;
+            --color-olive-green: #99A98F;
+            --font-montserrat: 'Montserrat', sans-serif;
+            --font-playfair: 'Playfair Display', serif;
+        }
+
+        .font-montserrat { font-family: var(--font-montserrat); }
+        .font-playfair { font-family: var(--font-playfair); }
+        .bg-pastel-pink { background-color: var(--color-pastel-pink); }
+        .text-olive-green { color: var(--color-olive-green); }
+        .bg-olive-green { background-color: var(--color-olive-green); }
+        .border-olive-green { border-color: var(--color-olive-green); }
+        
+        .animated-link {
+            transition: color 0.3s ease, border-color 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+        .animated-link:hover {
+            border-color: var(--color-olive-green);
+        }
+    </style>
+</head>
+<body class="font-montserrat text-gray-800 bg-white min-h-screen flex flex-col">
+
+    <!-- Configuración personalizada de Tailwind -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'pastel-pink': 'var(--color-pastel-pink)',
+                        'olive-green': 'var(--color-olive-green)',
+                    },
+                    fontFamily: {
+                        montserrat: ['Montserrat', 'sans-serif'],
+                        playfair: ['Playfair Display', 'serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <!-- Barra de Navegación (Header) -->
+    <header class="sticky top-0 z-50 bg-white/95 shadow-md backdrop-blur-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <!-- Logo Tipográfico con Monograma "M" (Versión Horizontal) -->
+            <a href="#" onclick="navigate('home')" class="text-2xl font-playfair font-black text-olive-green tracking-widest flex items-center group">
+                <!-- Monograma "M" estilizado con costura (simulado con líneas y color) -->
+                <span class="mr-2 text-3xl transition-colors duration-300 group-hover:text-pastel-pink">M</span>
+                AROCEGO
+            </a>
+            
+            <!-- Botón del menú móvil (Hamburguesa) -->
+            <button id="menu-button" class="md:hidden p-2 rounded-lg hover:bg-pastel-pink transition duration-300">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+
+            <!-- Menú de Navegación (Desktop) -->
+            <nav id="desktop-menu" class="hidden md:flex space-x-8 text-sm font-semibold uppercase tracking-wider">
+                <a href="#" onclick="navigate('home')" class="animated-link">Inicio</a>
+                <a href="#" onclick="navigate('about')" class="animated-link">Sobre mí</a>
+                <a href="#" onclick="navigate('services')" class="animated-link">Servicios</a>
+                <a href="#" onclick="navigate('portfolio')" class="animated-link">Portafolio</a>
+                <a href="#" onclick="navigate('blog')" class="animated-link">Blog</a>
+                <a href="#" onclick="navigate('contact')" class="animated-link">Contacto</a>
+            </nav>
+        </div>
+
+        <!-- Menú de Navegación (Mobile, aparece al hacer clic) -->
+        <nav id="mobile-menu" class="hidden md:hidden px-4 pt-2 pb-4 space-y-2 text-center text-sm uppercase bg-white shadow-lg">
+            <a href="#" onclick="navigate('home')" class="block py-2 hover:bg-pastel-pink rounded-md transition duration-300">Inicio</a>
+            <a href="#" onclick="navigate('about')" class="block py-2 hover:bg-pastel-pink rounded-md transition duration-300">Sobre mí</a>
+            <a href="#" onclick="navigate('services')" class="block py-2 hover:bg-pastel-pink rounded-md transition duration-300">Servicios</a>
+            <a href="#" onclick="navigate('portfolio')" class="block py-2 hover:bg-pastel-pink rounded-md transition duration-300">Portafolio</a>
+            <a href="#" onclick="navigate('blog')" class="block py-2 hover:bg-pastel-pink rounded-md transition duration-300">Blog</a>
+            <a href="#" onclick="navigate('contact')" class="block py-2 hover:bg-pastel-pink rounded-md transition duration-300">Contacto</a>
+        </nav>
+    </header>
+
+    <!-- Contenido Principal del Sitio -->
+    <main id="app" class="flex-grow"></main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-100 mt-12 py-12 px-4 sm:px-6 lg:px-8 font-montserrat text-sm">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+            <!-- Columna 1: Logo y Copyright -->
+            <div class="space-y-4">
+                <div class="text-xl font-playfair font-bold text-olive-green">MAROCEGO</div>
+                <p class="text-gray-600">Diseños conscientes, procesos visibles. Moda como identidad.</p>
+                <p class="text-xs text-gray-500">&copy; 2024 MAROCEGO. Todos los derechos reservados.</p>
+            </div>
+            <!-- Columna 2: Navegación Rápida -->
+            <div>
+                <h4 class="font-semibold mb-3 uppercase text-gray-700">Navegación</h4>
+                <ul class="space-y-2">
+                    <li><a href="#" onclick="navigate('about')" class="text-gray-600 hover:text-olive-green transition">Sobre mí</a></li>
+                    <li><a href="#" onclick="navigate('portfolio')" class="text-gray-600 hover:text-olive-green transition">Portafolio</a></li>
+                    <li><a href="#" onclick="navigate('services')" class="text-gray-600 hover:text-olive-green transition">Servicios</a></li>
+                </ul>
+            </div>
+            <!-- Columna 3: Legal y Blog -->
+            <div>
+                <h4 class="font-semibold mb-3 uppercase text-gray-700">Explorar</h4>
+                <ul class="space-y-2">
+                    <li><a href="#" onclick="navigate('blog')" class="text-gray-600 hover:text-olive-green transition">Blog de Sostenibilidad</a></li>
+                    <li><a href="#" href="#" class="text-gray-600 hover:text-olive-green transition">Aviso de Privacidad</a></li>
+                    <li><a href="#" href="#" class="text-gray-600 hover:text-olive-green transition">Términos de Servicio</a></li>
+                </ul>
+            </div>
+            <!-- Columna 4: Contacto y Redes -->
+            <div>
+                <h4 class="font-semibold mb-3 uppercase text-gray-700">Contacto</h4>
+                <p class="text-gray-600">correo@marocego.com</p>
+                <div class="flex space-x-4 mt-3">
+                    <!-- Iconos de Redes Sociales (Simulados) -->
+                    <a href="#" class="text-gray-500 hover:text-olive-green transition" aria-label="Instagram">
+                         <svg xmlns="https://www.instagram.com/marocego/" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                    </a>
+                    <a href="#" class="text-gray-500 hover:text-olive-green transition" aria-label="Pinterest">
+                        <svg xmlns="https://www.instagram.com/marocego/" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.5 13.5c-.75-.68-.82-1.74-.2-2.5 1.76-2.09 1.1-6.12-.55-8.47-2.12-3.04-6.8-2.65-8.72-1.63s-2.13 5.4 0 7.42c1.78 1.63 3.92.5 5.54-.42 1.34-1.2 1.83-2.9 1.44-4.5.33.2 1.13.2 1.45 0 .22-.2.1-.56-.12-.76-.56-.47-1.34-.6-2.1-.5-2.05-.2-4.13.8-5.3 2.5-1.55 2.2-1.2 5.5-.3 7.8 1.45 3.6 5.8 5.6 9.4 4.1 3.4-1.4 4.5-5.6 2.5-8.6-.2-.3-.5-.4-.7-.2-.2.2-.2.5 0 .7.1.1 0 .2.2.2.8.5.8 1.4 0 2.2-2 3.6-7.2 2.6-9.6-.8-.8-.3-1.4-1.2-1.9z"></path></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript para Manejo de Vistas y Lógica Interactiva -->
+    <script>
+        const app = document.getElementById('app');
+        const menuButton = document.getElementById('menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        // Lógica del menú móvil
+        menuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Función para renderizar el Proceso Abierto (Elemento diferenciador)
+        const renderProcesoAbierto = () => {
+            return `
+                <div class="mt-8 bg-pastel-pink p-8 rounded-xl shadow-lg">
+                    <h3 class="text-2xl font-playfair font-bold mb-6 text-olive-green text-center">Proceso Abierto: Transparencia en la Confección</h3>
+                    <p class="text-center mb-8 text-gray-700">Mira el desarrollo de la Colección 'AURA', desde el concepto inicial hasta la entrega final, reflejando nuestros valores de sostenibilidad.</p>
+                    
+                    <div class="relative max-w-4xl mx-auto">
+                        <!-- Línea de tiempo vertical para móviles, horizontal para desktop -->
+                        <div class="hidden md:flex justify-between items-center relative h-1 bg-olive-green mb-8">
+                            <div class="absolute inset-0 flex justify-between">
+                                <span class="w-4 h-4 rounded-full bg-olive-green -mt-[6px]"></span>
+                                <span class="w-4 h-4 rounded-full bg-olive-green -mt-[6px]"></span>
+                                <span class="w-4 h-4 rounded-full bg-olive-green -mt-[6px]"></span>
+                                <span class="w-4 h-4 rounded-full bg-olive-green -mt-[6px]"></span>
+                            </div>
+                        </div>
+
+                        <!-- Pasos del Proceso -->
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                            <div class="text-center space-y-3">
+                                <div class="text-3xl mb-2 text-olive-green">01.</div>
+                                <h4 class="font-semibold">Boceto y Concepto</h4>
+                                <p class="text-sm text-gray-600">Investigación de materiales sostenibles y diseño de patronaje. (1 semana)</p>
+                            </div>
+                            <div class="text-center space-y-3">
+                                <div class="text-3xl mb-2 text-olive-green">02.</div>
+                                <h4 class="font-semibold">Abastecimiento Ético</h4>
+                                <p class="text-sm text-gray-600">Selección de algodón orgánico y lino reciclado, garantizando trazabilidad. (2 días)</p>
+                            </div>
+                            <div class="text-center space-y-3">
+                                <div class="text-3xl mb-2 text-olive-green">03.</div>
+                                <h4 class="font-semibold">Confección Artesanal</h4>
+                                <p class="text-sm text-gray-600">Corte y costura a mano, asegurando durabilidad y calidad. (3 días por prenda)</p>
+                            </div>
+                            <div class="text-center space-y-3">
+                                <div class="text-3xl mb-2 text-olive-green">04.</div>
+                                <h4 class="font-semibold">Fotografía Final</h4>
+                                <p class="text-sm text-gray-600">Sesión editorial minimalista para presentar la pieza final. (1 día)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Definición de las plantillas de contenido para cada sección
+        const templates = {
+            home: `
+                <!-- Portada (Hero) -->
+                <section class="relative h-[80vh] flex items-center justify-center p-4">
+                    <!-- 5n sugerida: fotografía editorial vertical (placeholder) -->
+                    <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('WhatsApp Image 2025-10-19 at 13.11.55.jpeg'); filter: brightness(0.7);"></div>
+                    <div class="relative z-10 text-center text-white bg-black/30 p-8 rounded-xl max-w-3xl mx-auto shadow-2xl">
+                        <h1 class="text-4xl sm:text-6xl font-playfair font-extrabold leading-tight tracking-tight">
+                            MAROCEGO — Plataforma de moda sostenible y identitaria
+                        </h1>
+                        <p class="mt-4 text-lg sm:text-xl font-montserrat font-light">
+                            Moda como identidad. Diseños conscientes, procesos visibles.
+                        </p>
+                        <button onclick="navigate('portfolio')" class="mt-8 bg-white text-olive-green hover:bg-olive-green hover:text-white transition duration-300 font-semibold py-3 px-8 rounded-full shadow-xl uppercase tracking-wider">
+                            Ver Portafolio
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Bloque de Proyectos Recientes -->
+                <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12">
+                    <h2 class="text-3xl font-playfair font-bold text-center mb-8">Proyectos Recientes</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- Tarjeta 1 -->
+                        <div class="rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition duration-300 bg-pastel-pink">
+                            <img src="WhatsApp Image 2025-10-19 at 12.42.18.jpeg" alt="Colección Minimalista" class="w-full h-56 object-cover" loading="lazy">
+                            <div class="p-4">
+                                <h3 class="font-playfair font-bold text-xl mb-2">Colección AURA</h3>
+                                <p class="text-sm text-gray-700">Prendas con lino orgánico y teñidos naturales.</p>
+                                <a href="#" onclick="navigate('project-detail')" class="text-sm text-olive-green font-semibold mt-2 inline-block hover:underline">Ver ficha &rarr;</a>
+                            </div>
+                        </div>
+                        <!-- Tarjeta 2 -->
+                        <div class="rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition duration-300 bg-pastel-pink">
+                            <img src="WhatsApp Image 2025-10-19 at 13.19.59.jpeg" alt="Estilismo Editorial" class="w-full h-56 object-cover" loading="lazy">
+                            <div class="p-4">
+                                <h3 class="font-playfair font-bold text-xl mb-2">Styling Editorial [Revista]</h3>
+                                <p class="text-sm text-gray-700">Dirección de estilo para producción fotográfica.</p>
+                                <a href="#" onclick="navigate('photography')" class="text-sm text-olive-green font-semibold mt-2 inline-block hover:underline">Ver galería &rarr;</a>
+                            </div>
+                        </div>
+                        <!-- Tarjeta 3 -->
+                        <div class="rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition duration-300 bg-pastel-pink">
+                            <img src="WhatsApp Image 2025-10-19 at 13.23.21.jpeg" alt="Ilustración para Moda" class="w-full h-56 object-cover" loading="lazy">
+                            <div class="p-4">
+                                <h3 class="font-playfair font-bold text-xl mb-2">Ilustración de Patrones</h3>
+                                <p class="text-sm text-gray-700">Diseños abstractos para estampados textiles.</p>
+                                <a href="#" onclick="navigate('illustration')" class="text-sm text-olive-green font-semibold mt-2 inline-block hover:underline">Ver galería &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            `,
+            about: `
+                <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                    <h2 class="text-5xl font-playfair font-bold mb-10 text-center text-olive-green">Sobre MAROCEGO</h2>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-10 items-start">
+                        <!-- Columna 1: Foto y Cronología (Estilo minimalista) -->
+                        <div class="md:col-span-1 space-y-8">
+                            <img src="WhatsApp Image 2025-10-19 at 13.53.36.jpeg" alt="Mariana Cerón, diseñadora de MAROCEGO" class="w-full h-auto object-cover rounded-lg shadow-xl" loading="lazy">
+                            <div class="bg-gray-50 p-6 rounded-lg shadow-md">
+                                <h3 class="font-playfair text-2xl font-bold mb-4 text-olive-green">Cronología</h3>
+                                <ul class="text-sm space-y-2 text-gray-700">
+                                    <li><span class="font-bold">2018:</span> Estudios iniciales y experimentación textil.</li>
+                                    <li><span class="font-bold">2021:</span> Fundación de MAROCEGO con enfoque sostenible.</li>
+                                    <li><span class="font-bold">2023:</span> Lanzamiento de 'Colección Cero' y primeros talleres.</li>
+                                    <li><span class="font-bold">2024:</span> Plataforma web y expansión de servicios.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Columna 2 y 3: Biografía y Valores -->
+                        <div class="md:col-span-2 space-y-8">
+                            <h3 class="text-3xl font-playfair font-bold border-b pb-2 border-pastel-pink">Biografía Profesional</h3>
+                            <p class="text-lg leading-relaxed text-gray-700">Soy Mariana Cerón González, diseñadora y fundadora de MAROCEGO. Mi trayectoria se centra en la intersección del diseño identitario y la ética de producción. Creo firmemente que la moda es un lenguaje cultural poderoso que debe ser utilizado de forma consciente.</p>
+
+                            <p class="text-lg leading-relaxed text-gray-700">A lo largo de los años, he desarrollado una metodología que prioriza el ciclo de vida de la prenda, seleccionando rigurosamente proveedores de materiales orgánicos y locales. Mi trabajo no solo busca la estética, sino también la transparencia total en el proceso productivo, promoviendo un consumo más reflexivo.</p>
+
+                            <h3 class="text-3xl font-playfair font-bold border-b pb-2 border-pastel-pink mt-10">Valores de Marca</h3>
+                            <ul class="space-y-4 text-lg">
+                                <li class="flex items-start">
+                                    <span class="text-xl mr-3 text-olive-green">&bull;</span>
+                                    <div><strong class="font-semibold">Sostenibilidad Genuina:</strong> Priorizamos materiales reciclados, orgánicos y procesos de bajo impacto hídrico.</div>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-xl mr-3 text-olive-green">&bull;</span>
+                                    <div><strong class="font-semibold">Identidad y Cultura:</strong> Integramos técnicas artesanales mexicanas en el diseño contemporáneo.</div>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-xl mr-3 text-olive-green">&bull;</span>
+                                    <div><strong class="font-semibold">Transparencia:</strong> Mostramos el proceso completo de confección, desde el boceto hasta la foto final.</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            `,
+            portfolio: `
+                <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                    <h2 class="text-5xl font-playfair font-bold mb-4 text-center text-olive-green">Portafolio</h2>
+                    <p class="text-center mb-10 text-lg text-gray-600">Explora colecciones, ilustraciones y proyectos de estilismo con enfoque ético.</p>
+
+                    <!-- Filtros (Simulados) -->
+                    <div class="flex flex-wrap justify-center space-x-2 sm:space-x-4 mb-10 text-sm font-semibold">
+                        <button class="px-4 py-2 bg-olive-green text-white rounded-full hover:bg-gray-700 transition">Colecciones (3)</button>
+                        <button onclick="navigate('illustration')" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-full hover:bg-pastel-pink transition">Ilustración (8)</button>
+                        <button onclick="navigate('photography')" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-full hover:bg-pastel-pink transition">Fotografía (6)</button>
+                    </div>
+
+                    <!-- Galería de Proyectos -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <!-- Ficha de Proyecto 1 (Ejemplo destacado) -->
+                        <div class="group cursor-pointer rounded-lg overflow-hidden shadow-xl" onclick="navigate('project-detail')">
+                            <img src="WhatsApp Image 2025-10-19 at 12.42.18.jpeg" alt="Colección AURA" class="w-full h-72 object-cover transition duration-500 group-hover:scale-105" loading="lazy">
+                            <div class="p-6 bg-white">
+                                <p class="text-xs uppercase text-olive-green font-semibold">Colección</p>
+                                <h3 class="font-playfair font-bold text-2xl mt-1">Colección AURA</h3>
+                                <p class="text-sm text-gray-600 mt-2">Diseños minimalistas inspirados en la naturaleza y confeccionados con lino reciclado.</p>
+                            </div>
+                        </div>
+                        <!-- Ficha de Proyecto 2 -->
+                        <div class="group cursor-pointer rounded-lg overflow-hidden shadow-lg" onclick="navigate('photography')">
+                            <img src="WhatsApp Image 2025-10-19 at 13.19.59.jpeg" alt="Fotografía de Proceso" class="w-full h-72 object-cover transition duration-500 group-hover:scale-105" loading="lazy">
+                            <div class="p-6 bg-white">
+                                <p class="text-xs uppercase text-olive-green font-semibold">Fotografía</p>
+                                <h3 class="font-playfair font-bold text-2xl mt-1">Estilismo y Fotografía [Primavera]</h3>
+                                <p class="text-sm text-gray-600 mt-2">Creación de narrativa visual para campaña digital.</p>
+                            </div>
+                        </div>
+                        <!-- Ficha de Proyecto 3 -->
+                        <div class="group cursor-pointer rounded-lg overflow-hidden shadow-lg" onclick="navigate('illustration')">
+                            <img src="WhatsApp Image 2025-10-19 at 13.23.21.jpeg" alt="Ilustración Digital" class="w-full h-72 object-cover transition duration-500 group-hover:scale-105" loading="lazy">
+                            <div class="p-6 bg-white">
+                                <p class="text-xs uppercase text-olive-green font-semibold">Ilustración</p>
+                                <h3 class="font-playfair font-bold text-2xl mt-1">Serie de Estampados Abstractos</h3>
+                                <p class="text-sm text-gray-600 mt-2">Patrones digitales para serigrafía en fibras naturales.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            `,
+            'project-detail': `
+                <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                    <button onclick="navigate('portfolio')" class="text-olive-green font-semibold mb-6 hover:underline flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"></path><path d="M12 19l-7-7 7-7"></path></svg>
+                        Volver al Portafolio
+                    </button>
+                    <h2 class="text-5xl font-playfair font-bold mb-4 text-olive-green">Ficha de Proyecto: Colección AURA</h2>
+                    <p class="text-xl text-gray-700 mb-8">Diseño de una colección cápsula de 8 prendas funcionales y atemporales, 100% libre de tintes sintéticos.</p>
+
+                    <!-- Galería de imágenes (Mockup) -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
+                        <img src="WhatsApp Image 2025-10-19 at 12.32.12 (1).jpeg" alt="Pieza destacada de la Colección Aura" class="w-full h-auto rounded-lg shadow-xl" loading="lazy">
+                        <div class="grid grid-cols-2 gap-4">
+                            <img src="WhatsApp Image 2025-10-19 at 13.26.56.jpeg" alt="Detalle del tejido de lino" class="w-full h-auto rounded-lg shadow-md" loading="lazy">
+                            <img src="WhatsApp Image 2025-10-19 at 13.28.02.jpeg" alt="Moodboard de inspiración" class="w-full h-auto rounded-lg shadow-md" loading="lazy">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <!-- Detalles del Proyecto -->
+                        <div class="md:col-span-2 space-y-6">
+                            <h3 class="text-3xl font-playfair font-bold text-gray-800">Materiales y Concepto</h3>
+                            <p class="text-lg text-gray-700">La Colección AURA es una exploración del confort ético. Utilizamos exclusivamente lino reciclado certificado GOTS y botones de coco natural. El concepto se basa en la geometría orgánica de los paisajes desérticos, buscando siluetas fluidas que se adapten a cualquier cuerpo.</p>
+                            
+                            <ul class="list-disc list-inside space-y-2 text-gray-700">
+                                <li><strong>Tejido Principal:</strong> Lino 100% Reciclado.</li>
+                                <li><strong>Tintes:</strong> Pigmentos naturales (cáscara de nuez y aguacate).</li>
+                                <li><strong>Producción:</strong> Edición limitada y *Made-to-order*.</li>
+                                <li><strong>Impacto:</strong> Reducción del 40% en uso de agua comparado con algodón convencional.</li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Columna de Datos -->
+                        <div class="md:col-span-1 bg-gray-50 p-6 rounded-lg shadow-lg space-y-4">
+                            <h3 class="font-semibold text-xl border-b pb-2 text-olive-green">Ficha Técnica</h3>
+                            <p><strong>Categoría:</strong> Moda Sostenible</p>
+                            <p><strong>Diseñadora:</strong> Marian Cerón G.</p>
+                            <p><strong>Lanzamiento:</strong> Primavera 2024</p>
+                            <p><strong>Servicios Aplicados:</strong> Diseño de colección, Estilismo.</p>
+                        </div>
+                    </div>
+
+                    <!-- Elemento Diferenciador: Proceso Abierto -->
+                    ${renderProcesoAbierto()}
+                    
+                </section>
+            `,
+            photography: `
+                <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                    <button onclick="navigate('portfolio')" class="text-olive-green font-semibold mb-8 hover:underline flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"></path><path d="M12 19l-7-7 7-7"></path></svg>
+                        Volver al Portafolio
+                    </button>
+                    <h2 class="text-5xl font-playfair font-bold mb-10 text-center text-olive-green">Galería de Fotografía</h2>
+                    
+                    <!-- Image Gallery -->
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                        <div class="group cursor-pointer">
+                            <img class="h-auto max-w-full rounded-lg shadow-lg transition-transform duration-300 group-hover:scale-105" src="WhatsApp Image 2025-10-19 at 13.36.52.jpeg" alt="Fotografía de moda 1">
+                        </div>
+                        <div class="group cursor-pointer">
+                            <img class="h-auto max-w-full rounded-lg shadow-lg transition-transform duration-300 group-hover:scale-105" src="WhatsApp Image 2025-10-19 at 13.36.52 (2).jpeg" alt="Fotografía de detalle">
+                        </div>
+                        <div class="group cursor-pointer">
+                            <img class="h-auto max-w-full rounded-lg shadow-lg transition-transform duration-300 group-hover:scale-105" src="WhatsApp Image 2025-10-19 at 13.36.52 (1).jpeg" alt="Fotografía de campaña">
+                        </div>
+                        <div class="group cursor-pointer">
+                            <img class="h-auto max-w-full rounded-lg shadow-lg transition-transform duration-300 group-hover:scale-105" src="WhatsApp Image 2025-10-19 at 13.36.52 (3).jpeg" alt="Retrato de moda">
+                        </div>
+                        <div class="group cursor-pointer">
+                            <img class="h-auto max-w-full rounded-lg shadow-lg transition-transform duration-300 group-hover:scale-105" src="WhatsApp Image 2025-10-19 at 13.36.52 (4).jpeg" alt="Fotografía de proceso">
+                        </div>
+                        <div class="group cursor-pointer">
+                            <img class="h-auto max-w-full rounded-lg shadow-lg transition-transform duration-300 group-hover:scale-105" src="WhatsApp Image 2025-10-19 at 13.36.52 (5).jpeg" alt="Fotografía de moda 2">
+                        </div>
+                    </div>
+                </section>
+            `,
+            illustration: `
+                <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                    <button onclick="navigate('portfolio')" class="text-olive-green font-semibold mb-8 hover:underline flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"></path><path d="M12 19l-7-7 7-7"></path></svg>
+                        Volver al Portafolio
+                    </button>
+                    <h2 class="text-5xl font-playfair font-bold mb-10 text-center text-olive-green">Galería de Ilustración</h2>
+                    
+                    <!-- Image Gallery -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="group cursor-pointer">
+                            <img class="h-auto max-w-full rounded-lg shadow-lg transition-transform duration-300 group-hover:scale-105" src="WhatsApp Image 2025-10-19 at 13.45.39.jpeg" alt="Ilustración de patrón 1">
+                        </div>
+                        <div class="group cursor-pointer">
+                            <img class="h-auto max-w-full rounded-lg shadow-lg transition-transform duration-300 group-hover:scale-105" src="WhatsApp Image 2025-10-19 at 13.45.39 (1).jpeg" alt="Ilustración botánica">
+                        </div>
+                        <div class="group cursor-pointer">
+                            <img class="h-auto max-w-full rounded-lg shadow-lg transition-transform duration-300 group-hover:scale-105" src="WhatsApp Image 2025-10-19 at 13.45.39 (2).jpeg" alt="Ilustración abstracta">
+                        </div>
+                        <div class="group cursor-pointer">
+                            <img class="h-auto max-w-full rounded-lg shadow-lg transition-transform duration-300 group-hover:scale-105" src="WhatsApp Image 2025-10-19 at 13.45.39 (3).jpeg" alt="Boceto digital">
+                        </div>
+                        <div class="group cursor-pointer">
+                            <img class="h-auto max-w-full rounded-lg shadow-lg transition-transform duration-300 group-hover:scale-105" src="WhatsApp Image 2025-10-19 at 13.45.39 (4).jpeg" alt="Patrón geométrico">
+                        </div>
+                        <div class="group cursor-pointer">
+                            <img class="h-auto max-w-full rounded-lg shadow-lg transition-transform duration-300 group-hover:scale-105" src="WhatsApp Image 2025-10-19 at 13.45.39 (5).jpeg" alt="Ilustración de patrón 2">
+                        </div>
+                        <div class="group cursor-pointer">
+                            <img class="h-auto max-w-full rounded-lg shadow-lg transition-transform duration-300 group-hover:scale-105" src="WhatsApp Image 2025-10-19 at 13.45.39 (6).jpeg" alt="Ilustración acuarela">
+                        </div>
+                        <div class="group cursor-pointer">
+                            <img class="h-auto max-w-full rounded-lg shadow-lg transition-transform duration-300 group-hover:scale-105" src="WhatsApp Image 2025-10-19 at 13.45.39 (7).jpeg" alt="Arte lineal">
+                        </div>
+                    </div>
+                </section>
+            `,
+            services: `
+                <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                    <h2 class="text-5xl font-playfair font-bold mb-4 text-center text-olive-green">Servicios</h2>
+                    <p class="text-center mb-10 text-lg text-gray-600">Trabajemos juntos para construir una visión de moda más consciente y auténtica.</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        
+                        <!-- Tarjeta de Servicio 1: Asesoría -->
+                        <div class="bg-white p-6 rounded-lg shadow-xl border-t-4 border-olive-green space-y-4 text-center hover:shadow-2xl transition duration-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 mx-auto text-olive-green" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                            <h3 class="font-playfair font-bold text-2xl">Asesoría de Marca Sostenible</h3>
+                            <p class="text-gray-600">Guía para integrar prácticas éticas y materiales de bajo impacto en tu línea de moda existente.</p>
+                            <p class="font-bold text-xl text-olive-green">Cotización Personalizada</p>
+                            <button onclick="navigate('contact')" class="w-full bg-pastel-pink text-gray-800 hover:bg-olive-green hover:text-white transition duration-300 font-semibold py-2 rounded-full mt-3">
+                                Solicitar Cotización
+                            </button>
+                        </div>
+
+                        <!-- Tarjeta de Servicio 2: Estilismo -->
+                        <div class="bg-white p-6 rounded-lg shadow-xl border-t-4 border-pastel-pink space-y-4 text-center hover:shadow-2xl transition duration-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 mx-auto text-pastel-pink" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                            <h3 class="font-playfair font-bold text-2xl">Estilismo Editorial</h3>
+                            <p class="text-gray-600">Creación de moodboards, dirección de arte y selección de vestuario para editoriales o campañas.</p>
+                            <p class="font-bold text-xl text-olive-green">Desde 15,000 MXN</p>
+                            <button onclick="navigate('contact')" class="w-full bg-pastel-pink text-gray-800 hover:bg-olive-green hover:text-white transition duration-300 font-semibold py-2 rounded-full mt-3">
+                                Solicitar Cotización
+                            </button>
+                        </div>
+                        
+                        <!-- Tarjeta de Servicio 3: Talleres -->
+                        <div class="bg-white p-6 rounded-lg shadow-xl border-t-4 border-olive-green space-y-4 text-center hover:shadow-2xl transition duration-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 mx-auto text-olive-green" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H7l5 5-5 5h10l-5 5"></path></svg>
+                            <h3 class="font-playfair font-bold text-2xl">Talleres de Diseño Inclusivo</h3>
+                            <p class="text-gray-600">Sesiones educativas sobre patronaje adaptativo y moda sin género para equipos de diseño.</p>
+                            <p class="font-bold text-xl text-olive-green">Precio por Grupo</p>
+                            <button onclick="navigate('contact')" class="w-full bg-pastel-pink text-gray-800 hover:bg-olive-green hover:text-white transition duration-300 font-semibold py-2 rounded-full mt-3">
+                                Consultar Disponibilidad
+                            </button>
+                        </div>
+                    </div>
+                </section>
+            `,
+            blog: `
+                <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                    <h2 class="text-5xl font-playfair font-bold mb-4 text-center text-olive-green">Blog y Cultura Visual</h2>
+                    <p class="text-center mb-10 text-lg text-gray-600">Artículos sobre sostenibilidad, diseño inclusivo y la intersección de moda y cultura.</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <!-- Artículo 1: Sostenibilidad -->
+                        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                            <img src="WhatsApp Image 2025-10-19 at 14.01.45.jpeg" alt="Artículo sobre tintes naturales" class="w-full h-48 object-cover" loading="lazy">
+                            <div class="p-5">
+                                <p class="text-xs uppercase text-gray-500 mb-1">Sostenibilidad</p>
+                                <h3 class="font-playfair font-bold text-xl hover:text-olive-green transition cursor-pointer">El Impacto Real de los Tintes Naturales en la Cadena de Suministro</h3>
+                                <p class="text-sm text-gray-600 mt-2">Un análisis sobre cómo la pigmentación orgánica reduce la huella tóxica de la moda rápida.</p>
+                            </div>
+                        </div>
+                        <!-- Artículo 2: Inclusión -->
+                        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                            <img src="WhatsApp Image 2025-10-19 at 14.04.55.jpeg" alt="Artículo sobre moda inclusiva" class="w-full h-48 object-cover" loading="lazy">
+                            <div class="p-5">
+                                <p class="text-xs uppercase text-gray-500 mb-1">Diseño</p>
+                                <h3 class="font-playfair font-bold text-xl hover:text-olive-green transition cursor-pointer">Patronaje sin Género: Un Enfoque para la Moda Inclusiva</h3>
+                                <p class="text-sm text-gray-600 mt-2">Cómo los diseñadores están repensando las siluetas para cuerpos diversos.</p>
+                            </div>
+                        </div>
+                        <!-- Artículo 3: Cultura Visual -->
+                        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                            <img src="WhatsApp Image 2025-10-19 at 14.01.45 (1).jpeg" alt="Artículo sobre cultura visual" class="w-full h-48 object-cover" loading="lazy">
+                            <div class="p-5">
+                                <p class="text-xs uppercase text-gray-500 mb-1">Cultura</p>
+                                <h3 class="font-playfair font-bold text-xl hover:text-olive-green transition cursor-pointer">Minimalismo Textil: La Influencia Japonesa en la Sastrería Contemporánea</h3>
+                                <p class="text-sm text-gray-600 mt-2">El arte de la simpleza como acto de resistencia en la moda.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Galería de Moodboards (Sección Galería integrada) -->
+                    <h3 class="text-3xl font-playfair font-bold text-center mt-12 mb-6 border-t pt-8 border-pastel-pink">Galería de Moodboards</h3>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                        <img src="WhatsApp Image 2025-10-19 at 14.01.45 (2).jpeg" alt="Moodboard de colores tierra" class="w-full h-full object-cover rounded-lg shadow-md" loading="lazy">
+                        <img src="WhatsApp Image 2025-10-19 at 14.01.45 (3).jpeg" alt="Collage de texturas de lino" class="w-full h-full object-cover rounded-lg shadow-md" loading="lazy">
+                        <img src="WhatsApp Image 2025-10-19 at 14.01.45 (4).jpeg" alt="Documentación de teñido artesanal" class="w-full h-full object-cover rounded-lg shadow-md" loading="lazy">
+                        <img src="WhatsApp Image 2025-10-19 at 14.01.45 (5).jpeg" alt="Boceto geométrico de prenda" class="w-full h-full object-cover rounded-lg shadow-md" loading="lazy">
+                    </div>
+                </section>
+            `,
+            contact: `
+                <section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                    <h2 class="text-5xl font-playfair font-bold mb-4 text-center text-olive-green">Contacto</h2>
+                    <p class="text-center mb-10 text-lg text-gray-600">Conversemos sobre tu proyecto. La transparencia y la comunicación son clave.</p>
+
+                    <div class="bg-gray-50 p-8 rounded-xl shadow-2xl">
+                        <form class="space-y-6">
+                            <!-- Campo Nombre -->
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-gray-700">Nombre Completo</label>
+                                <input type="text" id="name" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-olive-green focus:border-olive-green" required>
+                            </div>
+
+                            <!-- Campo Correo -->
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-700">Correo Electrónico</label>
+                                <input type="email" id="email" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-olive-green focus:border-olive-green" required>
+                            </div>
+                            
+                            <!-- Campo Mensaje -->
+                            <div>
+                                <label for="message" class="block text-sm font-medium text-gray-700">Mensaje / Detalle de la Cotización</label>
+                                <textarea id="message" rows="5" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-olive-green focus:border-olive-green" required></textarea>
+                            </div>
+
+                            <!-- CTA Final -->
+                            <button type="submit" class="w-full bg-olive-green text-white hover:bg-gray-800 transition duration-300 font-semibold py-3 rounded-md uppercase tracking-wider shadow-lg">
+                                Enviar Mensaje
+                            </button>
+                        </form>
+
+                        <div class="mt-8 pt-6 border-t border-gray-200 text-center">
+                            <h3 class="font-semibold mb-3">Síguenos en Redes Sociales</h3>
+                            <div class="flex justify-center space-x-6">
+                                <a href="#" class="text-gray-500 hover:text-olive-green transition" aria-label="Instagram">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                                </a>
+                                <a href="#" class="text-gray-500 hover:text-olive-green transition" aria-label="Pinterest">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.5 13.5c-.75-.68-.82-1.74-.2-2.5 1.76-2.09 1.1-6.12-.55-8.47-2.12-3.04-6.8-2.65-8.72-1.63s-2.13 5.4 0 7.42c1.78 1.63 3.92.5 5.54-.42 1.34-1.2 1.83-2.9 1.44-4.5.33.2 1.13.2 1.45 0 .22-.2.1-.56-.12-.76-.56-.47-1.34-.6-2.1-.5-2.05-.2-4.13.8-5.3 2.5-1.55 2.2-1.2 5.5-.3 7.8 1.45 3.6 5.8 5.6 9.4 4.1 3.4-1.4 4.5-5.6 2.5-8.6-.2-.3-.5-.4-.7-.2-.2.2-.2.5 0 .7.1.1 0 .2.2.2.8.5.8 1.4 0 2.2-2 3.6-7.2 2.6-9.6-.8-.8-.3-1.4-1.2-1.9z"></path></svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            `
+        };
+
+        // Función de navegación principal
+        const navigate = (pageKey) => {
+            const content = templates[pageKey] || templates['home']; // Default a 'home'
+            app.innerHTML = content;
+            window.scrollTo(0, 0); // Desplaza al inicio de la página
+
+            // Oculta el menú móvil después de la navegación
+            mobileMenu.classList.add('hidden');
+
+            // Actualizar URL (opcional, pero buena práctica)
+            history.pushState(null, '', `#${pageKey}`);
+        };
+
+        // Inicializar la página al cargar
+        window.addEventListener('load', () => {
+            const initialPage = window.location.hash.substring(1) || 'home';
+            navigate(initialPage);
+        });
+    </script>
+</body>
+</html>
+
